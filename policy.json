@@ -1,0 +1,243 @@
+"name": "1Tenant",
+   "resources": {
+     "app_rule": {
+       "action": "MONITOR",
+       "outbound_allow_list": [
+         {
+           "filter": {
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL",
+             "params": {
+               "AppType": [
+                 "999TenantsManagers"
+               ]
+             }
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         },
+         {
+           "filter": {
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL",
+             "params": {
+               "AppType": [
+                 "998ComumServices"
+               ]
+             }
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         }
+       ],
+       "target_group": {
+         "filter": {
+           "kind_list": [
+             "vm"
+           ],
+           "type": "CATEGORIES_MATCH_ALL",
+           "params": {
+             "AppType": [
+               "1Tenant"
+             ]
+           }
+         },
+         "default_internal_policy": "ALLOW_ALL",
+         "peer_specification_type": "FILTER"
+       },
+       "inbound_allow_list": [
+         {
+           "filter": {
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL",
+             "params": {
+               "AppType": [
+                 "999TenantsManagers"
+               ]
+             }
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         },
+         {
+           "filter": {
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL",
+             "params": {
+               "AppType": [
+                 "998ComumServices"
+               ]
+             }
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         },
+         {
+           "ip_subnet": {
+             "ip": "192.168.1.0",
+             "prefix_length": 24
+           },
+           "protocol": "ICMP",
+           "peer_specification_type": "IP_SUBNET"
+         },
+         {
+           "ip_subnet": {
+             "ip": "192.168.1.0",
+             "prefix_length": 24
+           },
+           "tcp_port_range_list": [
+             {
+               "end_port": 343,
+               "start_port": 343
+             }
+           ],
+           "protocol": "TCP",
+           "peer_specification_type": "IP_SUBNET"
+         }
+       ]
+     }
+   },
+   "description": "Protect Tenant 1"
+ },
+ "spec": {
+   "description": "Protect Tenant 1",
+   "resources": {
+     "allow_ipv6_traffic": false,
+     "app_rule": {
+       "action": "MONITOR",
+       "outbound_allow_list": [
+         {
+           "filter": {
+             "params": {
+               "AppType": [
+                 "999TenantsManagers"
+               ]
+             },
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL"
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         },
+         {
+           "filter": {
+             "params": {
+               "AppType": [
+                 "998ComumServices"
+               ]
+             },
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL"
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         }
+       ],
+       "target_group": {
+         "filter": {
+           "params": {
+             "AppType": [
+               "1Tenant"
+             ]
+           },
+           "kind_list": [
+             "vm"
+           ],
+           "type": "CATEGORIES_MATCH_ALL"
+         },
+         "peer_specification_type": "FILTER"
+       },
+       "inbound_allow_list": [
+         {
+           "filter": {
+             "params": {
+               "AppType": [
+                 "999TenantsManagers"
+               ]
+             },
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL"
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         },
+         {
+           "filter": {
+             "params": {
+               "AppType": [
+                 "998ComumServices"
+               ]
+             },
+             "kind_list": [
+               "vm"
+             ],
+             "type": "CATEGORIES_MATCH_ALL"
+           },
+           "protocol": "ALL",
+           "peer_specification_type": "FILTER"
+         },
+         {
+           "ip_subnet": {
+             "ip": "192.168.1.0",
+             "prefix_length": 24
+           },
+           "protocol": "ICMP",
+           "peer_specification_type": "IP_SUBNET"
+         },
+         {
+           "ip_subnet": {
+             "ip": "192.168.1.0",
+             "prefix_length": 24
+           },
+           "tcp_port_range_list": [
+             {
+               "end_port": 343,
+               "start_port": 343
+             }
+           ],
+           "protocol": "TCP",
+           "peer_specification_type": "IP_SUBNET"
+         }
+       ]
+     },
+     "is_policy_hitlog_enabled": true
+   },
+   "name": "1Tenant"
+ },
+ "metadata": {
+   "last_update_time": "2020-03-18T18:13:01Z",
+   "kind": "network_security_rule",
+   "uuid": "8a60a5f1-68c7-49a1-84aa-e5272086e2bb",
+   "spec_version": 2,
+   "creation_time": "2020-03-18T18:06:46Z",
+   "categories_mapping": {},
+   "owner_reference": {
+     "kind": "user",
+     "uuid": "d655079c-0286-5325-a127-ba5ecc334786",
+     "name": "epenedos"
+   },
+   "categories": {}
+ }
+},
+{
+ "status": {
+   "state": "COMPLETE",
+   "execution_context": {
+     "task_uuids": [
+       "93760489-816b-4647-9d3e-ff746e25db8c"
+     ]
+   },
