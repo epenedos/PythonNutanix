@@ -1,12 +1,12 @@
 import tkinter
-from NutanixWindowFunctions import winClusterConnect
+import NutanixWindowFunctions
 
 
 class MenuBar:
     def __init__(self, window):
         # Create and display the main menu bar
         self.parent=window
-        
+
         menuBar = tkinter.Menu(window)
         #,command=winClusterConnect(window)
         # Create a pull-down menu for file operations
@@ -33,4 +33,4 @@ class MenuBar:
 
     def mnuConnect(self):
 
-        dlg = winClusterConnect(self.parent, title = "connect...")
+        dlg = NutanixWindowFunctions.winClusterConnect(self.parent, title = "connect...")

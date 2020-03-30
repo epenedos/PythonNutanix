@@ -4,101 +4,51 @@ import requests
 import time
 import sys
 import urllib3
+import tkinter as tk
 from tkinter import *
 from base64 import b64encode
-from NutanixAutoFunctions import *
-
-
-
+import NutanixAutoFunctions
+import NutanixAuto
 
 
 class winClusterConnect(Toplevel):
     def __init__(self, parent, title = None):
 
-        Toplevel.__init__(self, parent)
-        self.transient(parent)
-
-        if title:
-            self.title(title)
-
+        self.top = Toplevel(parent)
+        self.top.transient(parent)
+        self.top.grab_set()
         self.parent = parent
 
-        self.result = None
+        if len(title) > 0: self.top.title(title)
 
-        body = Frame(self)
-        self.initial_focus = self.body(body)
-        body.pack(padx=5, pady=5)
+        Label(self.top, text="Cluster PC IP:").grid(row=0)
+        Label(self.top, text="User ID:").grid(row=1)
+        Label(self.top, text="Password:").grid(row=2)
+        self.cip = StringVar()
+        self.userid = StringVar()
+        self.password = StringVar()
 
-        self.buttonbox()
+        self.cip = tk.Entry(self.top)
+        self.userid = tk.Entry(self.top)
+        self.password = tk.Entry(self.top)
+        self.cip.grid(row=0, column=1)
+        self.userid.grid(row=1, column=1)
+        self.password.grid(row=2, column=1)
+        self.top.bind("<Return>", self.ok)
+        self.top.bind("<Escape>", self.cancel)
+        self.top.focus_set()
 
-        self.grab_set()
+        Button(self.top, text="OK", command=self.ok).grid(row=5,column=1,pady=5)
 
-        if not self.initial_focus:
-            self.initial_focus = self
-
-        self.protocol("WM_DELETE_WINDOW", self.cancel)
-
-        self.geometry("+%d+%d" % (parent.winfo_rootx()+50,
-                                  parent.winfo_rooty()+50))
-
-        self.initial_focus.focus_set()
-
-        self.wait_window(self)
-
-    #
-    # construction hooks
-
-    def body(self, master):
-        # create dialog body.  return widget that should have
-        # initial focus.  this method should be overridden
-
-        pass
-
-    def buttonbox(self):
-        # add standard button box. override if you don't want the
-        # standard buttons
-
-        box = Frame(self)
-
-        w = Button(box, text="OK", width=10, command=self.ok, default=ACTIVE)
-        w.pack(side=LEFT, padx=5, pady=5)
-        w = Button(box, text="Cancel", width=10, command=self.cancel)
-        w.pack(side=LEFT, padx=5, pady=5)
-
-        self.bind("<Return>", self.ok)
-        self.bind("<Escape>", self.cancel)
-
-        box.pack()
-
-    #
-    # standard button semantics
+        self.top.mainloop()
 
     def ok(self, event=None):
+        self.cip = self.cip.get()
+        self.userid = self.userid.get()
+        self.password = self.password.get()
 
-        if not self.validate():
-            self.initial_focus.focus_set() # put focus back
-            return
-
-        self.withdraw()
-        self.update_idletasks()
-
-        self.apply()
-
-        self.cancel()
+        NutanixAuto.ntxinstance.clusterConnect(self.cip,self.userid,self.password)
+        self.top.destroy()
 
     def cancel(self, event=None):
-
-        # put focus back to the parent window
-        self.parent.focus_set()
-        self.destroy()
-
-    #
-    # command hooks
-
-    def validate(self):
-
-        return 1 # override
-
-    def apply(self):
-
-        ClusterConnect()
+        self.top.destroy()

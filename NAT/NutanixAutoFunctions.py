@@ -6,14 +6,24 @@ import sys
 import urllib3
 from base64 import b64encode
 
-def ClusterConnect():
-    requests.packages.urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-#  print 'Number of arguments:', len(sys.argv), 'arguments.'
-#  print 'Argument List:', str(sys.argv)
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-#  base_url = "https://192.168.86.20:9440/api/nutanix/v3/"
-    base_url = "https://10.59.98.253:9440/api/nutanix/v3/"
+class nutanixapi:
 
-    s = requests.Session()
-    s.auth=("epenedos","Nutanix/4u$")
-    s.headers.update({'Content-Type': 'application/json'})
+    def __init__(self):
+        self.clusterIP=""
+
+    def clusterConnect(self,clusterIP,userid,passwd):
+        self.ntxclusterip=clusterIP
+        self.ntxuser=userid
+        self.ntxpasswd=passwd
+        requests.packages.urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        self.base_url = "https://" + self.ntxclusterip + ":9440/api/nutanix/v3/"
+
+        s = requests.Session()
+        s.auth=(userid,passwd)
+        s.headers.update({'Content-Type': 'application/json'})
+
+    def listClusters(self):
+        body_cluster = {"kind": "cluster"}
+        r = self.s.request("POST",self.base_url + 'cluster/list/' + catname, data=json.dumps(body_cluster),verify=False)
+        return r
